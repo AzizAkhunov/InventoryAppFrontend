@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import AppLayout from "./components/layout/AppLayout"
-import AuthCallbackPage from "./pages/AuthCallBackPage"
+import AuthCallbackPage from "./pages/AuthCallbackPage"
 import DashboardPage from "./pages/DashboardPage"
 import InventoriesPage from "./pages/InventoriesPage" 
 import InventoryPage from "./pages/InventoryPage"
