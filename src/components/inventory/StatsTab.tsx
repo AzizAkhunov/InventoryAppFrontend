@@ -12,9 +12,13 @@ import {
 
 type Item = {
   id: string
-  text1?: string
+  customId: string
+  likesCount?: number
+
   number1?: number | null
   bool1?: boolean | null
+
+  doc1?: string | null
 }
 
 type Props = {
@@ -38,22 +42,24 @@ export default function StatsTab({ inventoryId }: Props) {
   }
 
 
+  /* ---------------- STATS ---------------- */
+
   const totalItems = items.length
+
+
+  const totalLikes = items.reduce(
+    (sum, item) => sum + (item.likesCount ?? 0),
+    0
+  )
+
+
+  const itemsWithDocuments = items.filter(
+    i => i.doc1 && i.doc1.trim() !== ""
+  ).length
+
 
   const boolTrue = items.filter(i => i.bool1 === true).length
   const boolFalse = items.filter(i => i.bool1 === false).length
-
-  const numbers = items
-    .map(i => i.number1)
-    .filter((n): n is number => n !== null && n !== undefined)
-
-  const avg =
-    numbers.length > 0
-      ? (numbers.reduce((a, b) => a + b, 0) / numbers.length).toFixed(2)
-      : 0
-
-  const max = numbers.length ? Math.max(...numbers) : 0
-  const min = numbers.length ? Math.min(...numbers) : 0
 
 
   const chartData = [
@@ -61,6 +67,8 @@ export default function StatsTab({ inventoryId }: Props) {
     { name: "False", value: boolFalse }
   ]
 
+
+  /* ---------------- UI ---------------- */
 
   return (
 
@@ -76,18 +84,18 @@ export default function StatsTab({ inventoryId }: Props) {
         </div>
 
         <div className="bg-white border rounded-xl p-4">
-          <div className="text-sm text-gray-500">Average Number</div>
-          <div className="text-2xl font-semibold">{avg}</div>
+          <div className="text-sm text-gray-500">Total Likes</div>
+          <div className="text-2xl font-semibold">{totalLikes}</div>
         </div>
 
         <div className="bg-white border rounded-xl p-4">
-          <div className="text-sm text-gray-500">Max Number</div>
-          <div className="text-2xl font-semibold">{max}</div>
+          <div className="text-sm text-gray-500">Items With Documents</div>
+          <div className="text-2xl font-semibold">{itemsWithDocuments}</div>
         </div>
 
         <div className="bg-white border rounded-xl p-4">
-          <div className="text-sm text-gray-500">Min Number</div>
-          <div className="text-2xl font-semibold">{min}</div>
+          <div className="text-sm text-gray-500">Boolean True</div>
+          <div className="text-2xl font-semibold">{boolTrue}</div>
         </div>
 
       </div>

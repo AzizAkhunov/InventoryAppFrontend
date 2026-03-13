@@ -2,277 +2,531 @@ import { useState, useEffect } from "react"
 
 import { Button } from "@/components/ui/button"
 
+
+import { Heart } from "lucide-react"
+import { toggleLike } from "@/api/ItemsApi"
+
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter
+Dialog,
+DialogContent,
+DialogHeader,
+DialogTitle,
+DialogFooter
 } from "@/components/ui/dialog"
 
 import {
-  getItems,
-  createItem,
-  updateItem,
-  deleteItems
+getItems,
+createItem,
+deleteItem
 } from "@/api/ItemsApi"
 
+import { getInventoryById } from "@/api/InventoryApi"
+
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
+Table,
+TableBody,
+TableCell,
+TableHead,
+TableHeader,
+TableRow
 } from "@/components/ui/table"
 
 import { Plus, Trash } from "lucide-react"
 
 type Item = {
-  id: string
-  customId: string
-  text1: string
-  number1?: number | null
-  bool1?: boolean | null
+id: string
+customId: string
+likesCount: number
+likedByMe: boolean
+
+text1?: string
+text2?: string
+text3?: string
+
+multiText1?: string
+multiText2?: string
+multiText3?: string
+
+number1?: number | null
+number2?: number | null
+number3?: number | null
+
+bool1?: boolean | null
+bool2?: boolean | null
+bool3?: boolean | null
+
+doc1?: string
+doc2?: string
+doc3?: string
+}
+
+type Inventory = {
+customString1Enabled: boolean
+customString1Name?: string
+customString2Enabled: boolean
+customString2Name?: string
+customString3Enabled: boolean
+customString3Name?: string
+
+customNumber1Enabled: boolean
+customNumber1Name?: string
+customNumber2Enabled: boolean
+customNumber2Name?: string
+customNumber3Enabled: boolean
+customNumber3Name?: string
+
+customBool1Enabled: boolean
+customBool1Name?: string
+customBool2Enabled: boolean
+customBool2Name?: string
+customBool3Enabled: boolean
+customBool3Name?: string
 }
 
 type Props = {
-  inventoryId: string
+inventoryId: string
 }
 
 export default function ItemsTab({ inventoryId }: Props) {
 
-  const [items, setItems] = useState<Item[]>([])
-  const [selected, setSelected] = useState<string[]>([])
-  const [search, setSearch] = useState("")
+const [items, setItems] = useState<Item[]>([])
+const [inventory, setInventory] = useState<Inventory | null>(null)
 
-  const [openAdd, setOpenAdd] = useState(false)
-  const [openEdit, setOpenEdit] = useState(false)
+const [selected, setSelected] = useState<string[]>([])
+const [search, setSearch] = useState("")
 
-  const [editItem, setEditItem] = useState<Item | null>(null)
+const [openAdd, setOpenAdd] = useState(false)
 
-  const [text1, setText1] = useState("")
-  const [number1, setNumber1] = useState("")
+const [text1, setText1] = useState("")
+const [text2, setText2] = useState("")
+const [text3, setText3] = useState("")
 
-  const filteredItems = items.filter(item =>
-    (item.text1 ?? "").toLowerCase().includes(search.toLowerCase())
-  )
+const [multiText1,setMultiText1] = useState("")
+const [multiText2,setMultiText2] = useState("")
+const [multiText3,setMultiText3] = useState("")
 
-  function toggleSelect(id: string) {
+const [number1, setNumber1] = useState("")
+const [number2, setNumber2] = useState("")
+const [number3, setNumber3] = useState("")
 
-    if (selected.includes(id)) {
-      setSelected(selected.filter(i => i !== id))
-    } else {
-      setSelected([...selected, id])
-    }
+const [bool1, setBool1] = useState(false)
+const [bool2, setBool2] = useState(false)
+const [bool3, setBool3] = useState(false)
 
-  }
+const [doc1,setDoc1] = useState("")
+const [doc2,setDoc2] = useState("")
+const [doc3,setDoc3] = useState("")
 
-  function toggleSelectAll() {
+const filteredItems = items.filter(item =>
+(item.customId ?? "").toLowerCase().includes(search.toLowerCase()) ||
+(item.text1 ?? "").toLowerCase().includes(search.toLowerCase())
+)
 
-    if (selected.length === filteredItems.length) {
-      setSelected([])
-    } else {
-      setSelected(filteredItems.map(i => i.id))
-    }
+function toggleSelect(id: string) {
 
-  }
+if (selected.includes(id)) {
+setSelected(selected.filter(i => i !== id))
+} else {
+setSelected([...selected, id])
+}
 
-  async function deleteSelected() {
+}
 
-    await deleteItems(selected)
+async function deleteSelected() {
 
-    setItems(items.filter(item => !selected.includes(item.id)))
+for (const id of selected) {
+await deleteItem(id)
+}
 
-    setSelected([])
+setItems(items.filter(item => !selected.includes(item.id)))
+setSelected([])
 
-  }
+}
 
-  async function addItem() {
+async function addItem() {
 
-    const data = {
-      inventoryId,
-      text1,
-      number1: Number(number1)
-    }
+const data = {
+inventoryId,
 
-    const res = await createItem(inventoryId, data)
+text1,
+text2,
+text3,
 
-    setItems([...items, res.data])
+multiText1,
+multiText2,
+multiText3,
 
-    setText1("")
-    setNumber1("")
+doc1,
+doc2,
+doc3,
 
-    setOpenAdd(false)
+number1: number1 ? Number(number1) : null,
+number2: number2 ? Number(number2) : null,
+number3: number3 ? Number(number3) : null,
 
-  }
+bool1,
+bool2,
+bool3
+}
 
-  function openEditDialog(item: Item) {
+const res = await createItem(data)
 
-    setEditItem(item)
+setItems([...items, res.data])
 
-    setText1(item.text1)
-    setNumber1(String(item.number1 ?? ""))
+resetForm()
 
-    setOpenEdit(true)
+setOpenAdd(false)
 
-  }
+}
 
-  async function saveEdit() {
 
-    if (!editItem) return
 
-    const data = {
-      text1,
-      number1: Number(number1)
-    }
+async function likeItem(itemId: string){
 
-    await updateItem(editItem.id, data)
+const res = await toggleLike(itemId)
 
-    const updated = items.map(item =>
-      item.id === editItem.id
-        ? { ...item, ...data }
-        : item
-    )
+const { likesCount, likedByMe } = res.data
 
-    setItems(updated)
+setItems(prev =>
+prev.map(i =>
+i.id === itemId
+? { ...i, likesCount, likedByMe }
+: i
+)
+)
 
-    setOpenEdit(false)
+}
 
-  }
 
-  useEffect(() => {
+function resetForm() {
 
-    async function loadItems() {
+setText1("")
+setText2("")
+setText3("")
 
-      const res = await getItems(inventoryId)
+setMultiText1("")
+setMultiText2("")
+setMultiText3("")
 
-      setItems(res.data)
+setNumber1("")
+setNumber2("")
+setNumber3("")
 
-    }
+setBool1(false)
+setBool2(false)
+setBool3(false)
 
-    loadItems()
+setDoc1("")
+setDoc2("")
+setDoc3("")
 
-  }, [inventoryId])
+}
 
-  return (
+useEffect(() => {
 
-    <div className="flex flex-col gap-8 items-center">
+async function loadData() {
 
-      <div className="flex justify-between w-[1200px]">
+const itemsRes = await getItems(inventoryId)
+setItems(itemsRes.data)
 
-        <h2 className="text-3xl font-semibold">
-          Items
-        </h2>
+const invRes = await getInventoryById(inventoryId)
+setInventory(invRes.data)
 
-        <div className="flex gap-4">
+}
 
-          <Button
-            className="bg-blue-600 hover:bg-blue-700"
-            onClick={() => setOpenAdd(true)}
-          >
-            <Plus className="w-4 h-4 mr-2"/>
-            Add Item
-          </Button>
 
-          {selected.length > 0 && (
-            <Button
-              variant="destructive"
-              onClick={deleteSelected}
-            >
-              <Trash className="w-4 h-4 mr-2"/>
-              Delete
-            </Button>
-          )}
 
-        </div>
 
-      </div>
+loadData()
 
-      <div className="w-[1200px]">
+}, [inventoryId])
 
-        <input
-          type="text"
-          placeholder="Search items..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full border rounded-lg px-4 py-3"
-        />
+return (
 
-      </div>
+<div className="flex flex-col gap-8 items-center">
 
-      <div className="w-[1200px] h-[400px] border rounded-xl overflow-y-auto">
+<div className="flex justify-between w-[1200px]">
 
-        <Table>
+<h2 className="text-3xl font-semibold">
+Items
+</h2>
 
-          <TableHeader>
+<div className="flex gap-4">
 
-            <TableRow>
+<Button
+className="bg-blue-600 hover:bg-blue-700"
+onClick={() => setOpenAdd(true)}
+>
+<Plus className="w-4 h-4 mr-2"/>
+Add Item
+</Button>
 
-              <TableHead></TableHead>
-              <TableHead>Custom ID</TableHead>
-              <TableHead>Text</TableHead>
-              <TableHead>Number</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+{selected.length > 0 && (
 
-            </TableRow>
+<Button
+variant="destructive"
+onClick={deleteSelected}
+>
+<Trash className="w-4 h-4 mr-2"/>
+Delete
+</Button>
 
-          </TableHeader>
+)}
 
-          <TableBody>
+</div>
 
-            {filteredItems.map(item => (
+</div>
 
-              <TableRow key={item.id}>
+<div className="w-[1200px]">
 
-                <TableCell>
-                  <input
-                    type="checkbox"
-                    checked={selected.includes(item.id)}
-                    onChange={() => toggleSelect(item.id)}
-                  />
-                </TableCell>
+<input
+type="text"
+placeholder="Search items..."
+value={search}
+onChange={(e) => setSearch(e.target.value)}
+className="w-full border rounded-lg px-4 py-3"
+/>
 
-                <TableCell className="font-mono">
-                  {item.customId}
-                </TableCell>
+</div>
 
-                <TableCell>
-                  {item.text1 ?? "-"}
-                </TableCell>
+<div className="w-[1200px] h-[400px] border rounded-xl overflow-y-auto">
 
-                <TableCell>
-                  {item.number1 ?? "-"}
-                </TableCell>
+<Table>
 
-                <TableCell>
-                  {item.bool1 ? "True" : "False"}
-                </TableCell>
+<TableHeader>
 
-                <TableCell className="text-right">
+<TableRow>
 
-                  <Button
-                    className="bg-yellow-500 hover:bg-yellow-600 text-black px-6"
-                    onClick={() => openEditDialog(item)}
-                  >
-                    Edit
-                  </Button>
+<TableHead></TableHead>
+<TableHead>Custom ID</TableHead>
 
-                </TableCell>
+{inventory?.customString1Enabled && <TableHead>{inventory.customString1Name}</TableHead>}
+{inventory?.customString2Enabled && <TableHead>{inventory.customString2Name}</TableHead>}
+{inventory?.customString3Enabled && <TableHead>{inventory.customString3Name}</TableHead>}
 
-              </TableRow>
+{inventory?.customNumber1Enabled && <TableHead>{inventory.customNumber1Name}</TableHead>}
+{inventory?.customNumber2Enabled && <TableHead>{inventory.customNumber2Name}</TableHead>}
+{inventory?.customNumber3Enabled && <TableHead>{inventory.customNumber3Name}</TableHead>}
 
-            ))}
+{inventory?.customBool1Enabled && <TableHead>{inventory.customBool1Name}</TableHead>}
+{inventory?.customBool2Enabled && <TableHead>{inventory.customBool2Name}</TableHead>}
+{inventory?.customBool3Enabled && <TableHead>{inventory.customBool3Name}</TableHead>}
 
-          </TableBody>
+<TableHead>❤️</TableHead>
 
-        </Table>
+</TableRow>
 
-      </div>
+</TableHeader>
 
-    </div>
+<TableBody>
 
-  )
+{filteredItems.map(item => (
+
+<TableRow key={item.id}>
+
+<TableCell>
+<input
+type="checkbox"
+checked={selected.includes(item.id)}
+onChange={() => toggleSelect(item.id)}
+/>
+</TableCell>
+
+<TableCell className="font-mono">
+{item.customId}
+</TableCell>
+
+{inventory?.customString1Enabled && <TableCell>{item.text1 ?? "-"}</TableCell>}
+{inventory?.customString2Enabled && <TableCell>{item.text2 ?? "-"}</TableCell>}
+{inventory?.customString3Enabled && <TableCell>{item.text3 ?? "-"}</TableCell>}
+
+{inventory?.customNumber1Enabled && <TableCell>{item.number1 ?? "-"}</TableCell>}
+{inventory?.customNumber2Enabled && <TableCell>{item.number2 ?? "-"}</TableCell>}
+{inventory?.customNumber3Enabled && <TableCell>{item.number3 ?? "-"}</TableCell>}
+
+{inventory?.customBool1Enabled && <TableCell>{item.bool1 ? "True" : "False"}</TableCell>}
+{inventory?.customBool2Enabled && <TableCell>{item.bool2 ? "True" : "False"}</TableCell>}
+{inventory?.customBool3Enabled && <TableCell>{item.bool3 ? "True" : "False"}</TableCell>}
+
+<TableCell>
+
+<button
+onClick={(e)=>{
+e.stopPropagation()
+likeItem(item.id)
+}}
+className="flex items-center gap-1"
+>
+
+<Heart
+className={`w-4 h-4 ${
+item.likedByMe
+? "text-red-500 fill-red-500"
+: "text-gray-400"
+}`}
+/>
+
+{item.likesCount}
+
+</button>
+
+</TableCell>
+
+</TableRow>
+
+))}
+
+</TableBody>
+
+</Table>
+
+</div>
+
+<Dialog open={openAdd} onOpenChange={setOpenAdd}>
+
+<DialogContent>
+
+<DialogHeader>
+<DialogTitle>Add Item</DialogTitle>
+</DialogHeader>
+
+<div className="flex flex-col gap-4">
+
+{inventory?.customString1Enabled && (
+<input
+placeholder={inventory.customString1Name}
+value={text1}
+onChange={(e)=>setText1(e.target.value)}
+className="border p-2 rounded"
+/>
+)}
+
+{inventory?.customString2Enabled && (
+<input
+placeholder={inventory.customString2Name}
+value={text2}
+onChange={(e)=>setText2(e.target.value)}
+className="border p-2 rounded"
+/>
+)}
+
+{inventory?.customString3Enabled && (
+<input
+placeholder={inventory.customString3Name}
+value={text3}
+onChange={(e)=>setText3(e.target.value)}
+className="border p-2 rounded"
+/>
+)}
+
+{inventory?.customNumber1Enabled && (
+<input
+type="number"
+placeholder={inventory.customNumber1Name}
+value={number1}
+onChange={(e)=>setNumber1(e.target.value)}
+className="border p-2 rounded"
+/>
+)}
+
+{inventory?.customNumber2Enabled && (
+<input
+type="number"
+placeholder={inventory.customNumber2Name}
+value={number2}
+onChange={(e)=>setNumber2(e.target.value)}
+className="border p-2 rounded"
+/>
+)}
+
+{inventory?.customNumber3Enabled && (
+<input
+type="number"
+placeholder={inventory.customNumber3Name}
+value={number3}
+onChange={(e)=>setNumber3(e.target.value)}
+className="border p-2 rounded"
+/>
+)}
+
+{inventory?.customBool1Enabled && (
+<label className="flex gap-2">
+<input
+type="checkbox"
+checked={bool1}
+onChange={(e)=>setBool1(e.target.checked)}
+/>
+{inventory.customBool1Name}
+</label>
+)}
+
+{inventory?.customBool2Enabled && (
+<label className="flex gap-2">
+<input
+type="checkbox"
+checked={bool2}
+onChange={(e)=>setBool2(e.target.checked)}
+/>
+{inventory.customBool2Name}
+</label>
+)}
+
+{inventory?.customBool3Enabled && (
+<label className="flex gap-2">
+<input
+type="checkbox"
+checked={bool3}
+onChange={(e)=>setBool3(e.target.checked)}
+/>
+{inventory.customBool3Name}
+</label>
+)}
+
+<input
+placeholder="Document URL"
+value={doc1}
+onChange={(e)=>setDoc1(e.target.value)}
+className="border p-2 rounded"
+/>
+
+{doc1 && (
+<div className="border p-2 rounded">
+
+{doc1.toLowerCase().endsWith(".pdf") ? (
+
+<iframe
+src={doc1}
+className="w-full h-40"
+/>
+
+) : (
+
+<img
+src={doc1}
+className="max-h-40 object-contain"
+/>
+
+)}
+
+</div>
+)}
+
+</div>
+
+<DialogFooter>
+
+<Button onClick={addItem}>
+Create
+</Button>
+
+</DialogFooter>
+
+</DialogContent>
+
+</Dialog>
+
+</div>
+
+)
 
 }

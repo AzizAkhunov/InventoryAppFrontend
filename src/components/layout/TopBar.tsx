@@ -160,16 +160,17 @@ export default function Topbar() {
   }
 
 
-  function handleNotificationClick(n: any) {
+function handleNotificationClick(n: any) {
 
-    markAsRead(n.id)
+  markAsRead(n.id)
 
-    setUnreadCount(prev => Math.max(prev - 1, 0))
+  setUnreadCount(prev => Math.max(prev - 1, 0))
 
-    navigate(`/inventory/${n.inventoryId}?tab=discussion`)
+  setNotifications(prev => prev.filter(x => x.id !== n.id))
 
-  }
+  navigate(`/inventories/${n.inventoryId}?tab=discussion`)
 
+}
 
   function handleLogout() {
 

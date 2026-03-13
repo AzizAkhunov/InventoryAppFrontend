@@ -17,3 +17,7 @@ export const getMyInventories = () =>
 
 export const getSharedInventories = () =>
   api.get("/inventories/shared")
+
+export function saveCustomId(inventoryId: string, elements: any[]) {
+  return api.post(`/inventories/${inventoryId}/custom-id`, elements)
+}
