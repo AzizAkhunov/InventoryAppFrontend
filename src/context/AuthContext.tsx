@@ -2,6 +2,18 @@ import { createContext, useContext, useMemo, useState } from "react"
 import type { ReactNode } from "react"
 import axios from "axios"
 import { useEffect } from "react"
+import {jwtDecode} from "jwt-decode"
+import { setupAxiosInterceptor } from "@/api/axiosInterceptor"
+
+
+type JwtPayload = {
+  name: string
+  role: string
+  nameid: string
+}
+
+
+
 type User = {
   id: string
   userName: string
@@ -27,6 +39,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const raw = localStorage.getItem("user")
     return raw ? JSON.parse(raw) : null
   })
+
+
+useEffect(() => {
+  setupAxiosInterceptor(logout)
+}, [])
 
 
 useEffect(() => {
@@ -69,4 +86,15 @@ export function useAuth() {
   const ctx = useContext(AuthContext)
   if (!ctx) throw new Error("useAuth must be used inside AuthProvider")
   return ctx
+}
+
+
+function parseUser(token: string) {
+  const decoded = jwtDecode<JwtPayload>(token)
+
+  return {
+    id: decoded.nameid,
+    name: decoded.name,
+    role: decoded.role
+  }
 }

@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react"
 import { api } from "@/api/apiClient"
 import { Button } from "@/components/ui/button"
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction
+} from "@/components/ui/alert-dialog"
+import { useNavigate } from "react-router-dom"
 
 type Inventory = {
   id: string
@@ -24,7 +36,7 @@ export default function SettingsTab({ inventoryId }: Props) {
   const [imageUrl, setImageUrl] = useState("")
   const [isPublic, setIsPublic] = useState(false)
   const [category, setCategory] = useState("")
-
+  const navigate = useNavigate()
   useEffect(() => {
 
     loadInventory()
@@ -66,11 +78,9 @@ export default function SettingsTab({ inventoryId }: Props) {
 
   async function deleteInventory() {
 
-    if (!confirm("Delete this inventory?")) return
-
     await api.delete(`/inventories/${inventoryId}`)
 
-    window.location.href = "/inventories"
+    navigate("/inventories")
 
   }
 
@@ -165,12 +175,48 @@ return (
         Save Changes
       </Button>
 
-      <Button
-        variant="destructive"
+      <AlertDialog>
+
+  <AlertDialogTrigger asChild>
+
+    <Button variant="destructive">
+      Delete Inventory
+    </Button>
+
+  </AlertDialogTrigger>
+
+  <AlertDialogContent>
+
+    <AlertDialogHeader>
+
+      <AlertDialogTitle>
+        Delete Inventory
+      </AlertDialogTitle>
+
+      <AlertDialogDescription>
+        Are you sure you want to delete this inventory? This action cannot be undone.
+      </AlertDialogDescription>
+
+    </AlertDialogHeader>
+
+    <AlertDialogFooter>
+
+      <AlertDialogCancel>
+        Cancel
+      </AlertDialogCancel>
+
+      <AlertDialogAction
+        className="bg-red-600 hover:bg-red-700"
         onClick={deleteInventory}
       >
-        Delete Inventory
-      </Button>
+        Delete
+      </AlertDialogAction>
+
+    </AlertDialogFooter>
+
+  </AlertDialogContent>
+
+</AlertDialog>
 
     </div>
 

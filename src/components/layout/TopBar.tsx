@@ -185,9 +185,11 @@ function handleNotificationClick(n: any) {
 
   return (
 
-    <div className="border-b bg-white px-6 py-3 flex items-center justify-between">
+    <div className="border-b bg-white px-6 h-16 flex items-center justify-between">
 
-      <div></div>
+      <div className="font-bold text-xl text-blue-600 tracking-tight">
+  Inventory
+</div>
 
       <div className="flex items-center gap-4">
 
@@ -253,7 +255,7 @@ function handleNotificationClick(n: any) {
         {/* GOOGLE LOGIN */}
 
         {!user && (
-          <div id="google-login-button"></div>
+          <div className="flex items-center h-10" id="google-login-button"></div>
         )}
 
 

@@ -21,3 +21,7 @@ export const getSharedInventories = () =>
 export function saveCustomId(inventoryId: string, elements: any[]) {
   return api.post(`/inventories/${inventoryId}/custom-id`, elements)
 }
+
+export function getInventoriesByTag(tag: string) {
+  return api.get(`/inventories/by-tag?tag=${tag}`)
+}

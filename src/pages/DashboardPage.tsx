@@ -43,67 +43,36 @@ export default function DashboardPage() {
   const [activity, setActivity] = useState<Activity[]>([])
 
   useEffect(() => {
-
     loadStats()
     loadActivity()
-
   }, [])
 
-
   async function loadStats() {
-
     const res = await api.get("/dashboard/stats")
-
     setStats(res.data)
-
   }
-
 
   async function loadActivity() {
-
     const res = await api.get("/dashboard/activity")
-
     setActivity(res.data)
-
   }
 
-
   const statsList = [
-    {
-      title: "Inventories",
-      value: stats.inventories,
-      icon: Boxes
-    },
-    {
-      title: "Items",
-      value: stats.items,
-      icon: Package
-    },
-    {
-      title: "Discussion Posts",
-      value: stats.posts,
-      icon: MessageSquare
-    },
-    {
-      title: "Users",
-      value: stats.users,
-      icon: Users
-    }
+    { title: "Inventories", value: stats.inventories, icon: Boxes },
+    { title: "Items", value: stats.items, icon: Package },
+    { title: "Discussion Posts", value: stats.posts, icon: MessageSquare },
+    { title: "Users", value: stats.users, icon: Users }
   ]
-
 
   return (
 
-    <div className="p-8 flex flex-col gap-8">
+    <div className="p-6 flex flex-col gap-6">
 
       <h1 className="text-3xl font-semibold">
         Dashboard
       </h1>
 
-
-      {/* STATS */}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
 
         {statsList.map((s, i) => {
 
@@ -142,9 +111,6 @@ export default function DashboardPage() {
 
       </div>
 
-
-      {/* CHART */}
-
       <Card className="shadow-sm">
 
         <CardHeader>
@@ -155,25 +121,39 @@ export default function DashboardPage() {
 
         </CardHeader>
 
-        <CardContent className="h-[350px]">
+        <CardContent>
 
-          <ResponsiveContainer width="100%" height="100%">
+          <div className="w-full h-[260px]">
 
-            <BarChart data={activity}>
+            {activity.length > 0 ? (
 
-              <XAxis dataKey="month"/>
+              <ResponsiveContainer width="100%" height="100%">
 
-              <Tooltip/>
+                <BarChart data={activity}>
 
-              <Bar
-                dataKey="value"
-                fill="#3b82f6"
-                radius={[6,6,0,0]}
-              />
+                  <XAxis dataKey="month"/>
 
-            </BarChart>
+                  <Tooltip/>
 
-          </ResponsiveContainer>
+                  <Bar
+                    dataKey="value"
+                    fill="#3b82f6"
+                    radius={[6,6,0,0]}
+                  />
+
+                </BarChart>
+
+              </ResponsiveContainer>
+
+            ) : (
+
+              <div className="flex items-center justify-center h-full text-muted-foreground">
+                No activity yet
+              </div>
+
+            )}
+
+          </div>
 
         </CardContent>
 

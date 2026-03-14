@@ -7,29 +7,25 @@ import {
 } from "lucide-react"
 
 import { NavLink } from "react-router-dom"
-
-const menu = [
-  { name: "Dashboard", path: "/", icon: LayoutDashboard },
-  { name: "Inventories", path: "/inventories", icon: Boxes },
-  { name: "Tags", path: "/tags", icon: Tag },
-  {name: "Users", path: "/users", icon: MessageSquare },
-  { name: "Settings", path: "/settings", icon: Settings }
-]
+import { useAuth } from "@/context/AuthContext"
 
 export default function Sidebar() {
 
+  const { user } = useAuth()
+
+  const menu = [
+    { name: "Dashboard", path: "/", icon: LayoutDashboard },
+    { name: "Inventories", path: "/inventories", icon: Boxes },
+    { name: "Tags", path: "/tags", icon: Tag },
+  ]
+
+  if (user?.isAdmin) {
+    menu.push({ name: "Admin Panel", path: "/admin", icon: MessageSquare })
+  }
+
   return (
 
-    <aside className="w-64 border-r bg-white h-screen flex flex-col">
-
-      {/* LOGO */}
-
-      <div className="p-6 font-semibold text-xl border-b text-blue-600">
-        Inventory
-      </div>
-
-
-      {/* MENU */}
+    <aside className="w-64 border-r bg-white flex flex-col">
 
       <nav className="flex flex-col gap-1 p-3">
 
@@ -42,7 +38,6 @@ export default function Sidebar() {
             <NavLink
               key={item.name}
               to={item.path}
-
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition
                 ${
@@ -53,7 +48,7 @@ export default function Sidebar() {
               }
             >
 
-              <Icon className="h-4 w-4"/>
+              <Icon className="h-4 w-4" />
 
               {item.name}
 
