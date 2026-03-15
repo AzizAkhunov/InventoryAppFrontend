@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { api } from "@/api/apiClient"
 import { Button } from "@/components/ui/button"
+import { useTranslation } from "react-i18next"
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -28,9 +29,9 @@ type Props = {
 }
 
 export default function SettingsTab({ inventoryId }: Props) {
-
+  const { t } = useTranslation()
   const [inventory, setInventory] = useState<Inventory | null>(null)
-
+const [success, setSuccess] = useState(false)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [imageUrl, setImageUrl] = useState("")
@@ -71,8 +72,11 @@ export default function SettingsTab({ inventoryId }: Props) {
       categoryName: category
     })
 
-    alert("Inventory updated")
+setSuccess(true)
 
+setTimeout(() => {
+  setSuccess(false)
+}, 2000)
   }
 
 
@@ -90,16 +94,21 @@ export default function SettingsTab({ inventoryId }: Props) {
 
 return (
 
+  
   <div className="flex flex-col gap-5 w-[1000px]">
 
     <h2 className="text-xl font-semibold">
-      Inventory Settings
+      {t("inventorySettings")}
     </h2>
-
+{success && (
+  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
+    Inventory updated
+  </div>
+)}
     {/* TITLE */}
 
     <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium">Title</label>
+      <label className="text-sm font-medium">{t("title")}</label>
 
       <input
         value={title}
@@ -112,7 +121,7 @@ return (
     {/* DESCRIPTION */}
 
     <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium">Description</label>
+      <label className="text-sm font-medium">{t("description")}</label>
 
       <textarea
         value={description}
@@ -126,7 +135,7 @@ return (
     {/* CATEGORY */}
 
     <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium">Category</label>
+      <label className="text-sm font-medium">{t("category")}</label>
 
       <input
         value={category}
@@ -139,7 +148,7 @@ return (
     {/* IMAGE */}
 
     <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium">Image URL</label>
+      <label className="text-sm font-medium">{t("imageUrl")}</label>
 
       <input
         value={imageUrl}
@@ -172,7 +181,7 @@ return (
         className="bg-blue-600 hover:bg-blue-700"
         onClick={saveChanges}
       >
-        Save Changes
+        {t("saveChanges")}
       </Button>
 
       <AlertDialog>
@@ -180,7 +189,7 @@ return (
   <AlertDialogTrigger asChild>
 
     <Button variant="destructive">
-      Delete Inventory
+      {t("deleteInventory")}
     </Button>
 
   </AlertDialogTrigger>
@@ -190,11 +199,11 @@ return (
     <AlertDialogHeader>
 
       <AlertDialogTitle>
-        Delete Inventory
+        {t("deleteInventory")}
       </AlertDialogTitle>
 
       <AlertDialogDescription>
-        Are you sure you want to delete this inventory? This action cannot be undone.
+        {t("DeleteDesc")}
       </AlertDialogDescription>
 
     </AlertDialogHeader>
@@ -202,14 +211,14 @@ return (
     <AlertDialogFooter>
 
       <AlertDialogCancel>
-        Cancel
+        {t("cancel")}
       </AlertDialogCancel>
 
       <AlertDialogAction
         className="bg-red-600 hover:bg-red-700"
         onClick={deleteInventory}
       >
-        Delete
+        {t("delete")}
       </AlertDialogAction>
 
     </AlertDialogFooter>

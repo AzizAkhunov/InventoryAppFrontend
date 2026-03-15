@@ -1,23 +1,40 @@
 import { useParams, useSearchParams } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-
+import { useTranslation } from "react-i18next"
+import { getInventoryById } from "@/api/InventoryApi"
 import CustomIdTab from "../components/inventory/CustomIdTab"
 import ItemsTab from "../components/inventory/ItemsTab"
 import DiscussionTab from "../components/inventory/DiscussionTab"
 import StatsTab from "../components/inventory/StatsTab"
 import SettingsTab from "../components/inventory/SettingsTab"
+import AccessTab from "@/components/inventory/AccessTab"
 
 export default function InventoryPage() {
 
-  const { id } = useParams()
+  const { t } = useTranslation()
 
+  const { id} = useParams()
+  const [title, setTitle] = useState("")
   const [searchParams] = useSearchParams()
   const tabFromUrl = searchParams.get("tab")
 
   const [activeTab, setActiveTab] = useState("items")
 
   const discussionRef = useRef<HTMLDivElement>(null)
+
+useEffect(() => {
+async function loadInventory(){
+
+const res = await getInventoryById(id!)
+setTitle(res.data.title)
+
+}
+
+loadInventory()
+
+}, [id])
+
 
   useEffect(() => {
 
@@ -39,8 +56,11 @@ export default function InventoryPage() {
     <div className="flex flex-col gap-6">
 
       <h1 className="text-3xl font-semibold">
-        Inventory {id}
-      </h1>
+  {t("inventory")}: 
+  <span className="text-blue-600 ml-2">
+    {title}
+  </span>
+</h1>
 
       <Tabs
         value={activeTab}
@@ -54,36 +74,43 @@ export default function InventoryPage() {
             value="items"
             className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
-            Items
+            {t("items")}
           </TabsTrigger>
 
           <TabsTrigger
             value="discussion"
             className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
-            Discussion
+            {t("discussion")}
           </TabsTrigger>
 
           <TabsTrigger
             value="settings"
             className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
-            Settings
+            {t("settings")}
           </TabsTrigger>
 
           <TabsTrigger
             value="customId"
             className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
-            Custom ID
+            {t("customId")}
           </TabsTrigger>
 
           <TabsTrigger
             value="stats"
             className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
-            Stats
+            {t("stats")}
           </TabsTrigger>
+
+          <TabsTrigger
+ value="access"
+ className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+>
+Access
+</TabsTrigger>
 
         </TabsList>
 
@@ -109,6 +136,10 @@ export default function InventoryPage() {
         <TabsContent value="customId">
           <CustomIdTab inventoryId={id!} />
         </TabsContent>
+
+        <TabsContent value="access">
+ <AccessTab inventoryId={id!}/>
+</TabsContent>
 
       </Tabs>
 

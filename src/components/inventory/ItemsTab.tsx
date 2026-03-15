@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 import { Button } from "@/components/ui/button"
 
-
+import { useTranslation } from "react-i18next"
 import { Heart } from "lucide-react"
 import { toggleLike } from "@/api/ItemsApi"
 
@@ -32,6 +32,8 @@ TableRow
 } from "@/components/ui/table"
 
 import { Plus, Trash } from "lucide-react"
+
+
 
 type Item = {
 id: string
@@ -89,6 +91,7 @@ inventoryId: string
 
 export default function ItemsTab({ inventoryId }: Props) {
 
+const { t } = useTranslation()
 const [items, setItems] = useState<Item[]>([])
 const [inventory, setInventory] = useState<Inventory | null>(null)
 
@@ -248,7 +251,7 @@ return (
 <div className="flex justify-between w-[1200px]">
 
 <h2 className="text-3xl font-semibold">
-Items
+{t("items")}
 </h2>
 
 <div className="flex gap-4">
@@ -258,7 +261,7 @@ className="bg-blue-600 hover:bg-blue-700"
 onClick={() => setOpenAdd(true)}
 >
 <Plus className="w-4 h-4 mr-2"/>
-Add Item
+{t("addItem")}
 </Button>
 
 {selected.length > 0 && (
@@ -268,7 +271,7 @@ variant="destructive"
 onClick={deleteSelected}
 >
 <Trash className="w-4 h-4 mr-2"/>
-Delete
+{t("delete")}
 </Button>
 
 )}
@@ -281,7 +284,7 @@ Delete
 
 <input
 type="text"
-placeholder="Search items..."
+placeholder={t("searchItems")}
 value={search}
 onChange={(e) => setSearch(e.target.value)}
 className="w-full border rounded-lg px-4 py-3"
@@ -344,9 +347,9 @@ onChange={() => toggleSelect(item.id)}
 {inventory?.customNumber2Enabled && <TableCell>{item.number2 ?? "-"}</TableCell>}
 {inventory?.customNumber3Enabled && <TableCell>{item.number3 ?? "-"}</TableCell>}
 
-{inventory?.customBool1Enabled && <TableCell>{item.bool1 ? "True" : "False"}</TableCell>}
-{inventory?.customBool2Enabled && <TableCell>{item.bool2 ? "True" : "False"}</TableCell>}
-{inventory?.customBool3Enabled && <TableCell>{item.bool3 ? "True" : "False"}</TableCell>}
+{inventory?.customBool1Enabled && <TableCell>{item.bool1 ? t("true") : t("false")}</TableCell>}
+{inventory?.customBool2Enabled && <TableCell>{item.bool2 ? t("true") : t("false")}</TableCell>}
+{inventory?.customBool3Enabled && <TableCell>{item.bool3 ? t("true") : t("false")}</TableCell>}
 
 <TableCell>
 
@@ -387,7 +390,7 @@ item.likedByMe
 <DialogContent>
 
 <DialogHeader>
-<DialogTitle>Add Item</DialogTitle>
+<DialogTitle>{t("addItem")}</DialogTitle>
 </DialogHeader>
 
 <div className="flex flex-col gap-4">
@@ -483,7 +486,7 @@ onChange={(e)=>setBool3(e.target.checked)}
 )}
 
 <input
-placeholder="Document URL"
+placeholder={t("documentUrl")}
 value={doc1}
 onChange={(e)=>setDoc1(e.target.value)}
 className="border p-2 rounded"
@@ -516,7 +519,7 @@ className="max-h-40 object-contain"
 <DialogFooter>
 
 <Button onClick={addItem}>
-Create
+{t("create")}
 </Button>
 
 </DialogFooter>

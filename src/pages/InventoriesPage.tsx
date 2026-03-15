@@ -9,7 +9,7 @@ CardTitle
 
 import { useNavigate } from "react-router-dom"
 import { Plus, Search, Boxes, X } from "lucide-react"
-
+import { useTranslation } from "react-i18next"
 import { useState, useEffect } from "react"
 
 import {
@@ -26,7 +26,7 @@ export default function InventoriesPage() {
 
 const navigate = useNavigate()
 const { user } = useAuth()
-
+const { t } = useTranslation()
 const [search, setSearch] = useState("")
 const [open, setOpen] = useState(false)
 
@@ -235,7 +235,7 @@ return (
 <div className="flex items-center justify-between">
 
 <h1 className="text-3xl font-semibold">
-Inventories
+{t("inventories")}
 </h1>
 
 <Button
@@ -244,7 +244,7 @@ onClick={() => setOpen(true)}
 >
 
 <Plus className="w-4 h-4 mr-2"/>
-Create Inventory
+{t("createInventory")}
 
 </Button>
 
@@ -259,21 +259,21 @@ Create Inventory
 variant={mode === "all" ? "default" : "outline"}
 onClick={() => setMode("all")}
 >
-All
+{t("all")}
 </Button>
 
 <Button
 variant={mode === "my" ? "default" : "outline"}
 onClick={() => setMode("my")}
 >
-My Inventories
+{t("myInventories")}
 </Button>
 
 <Button
 variant={mode === "shared" ? "default" : "outline"}
 onClick={() => setMode("shared")}
 >
-Shared With Me
+{t("sharedWithMe")}
 </Button>
 
 </div>
@@ -283,7 +283,7 @@ Shared With Me
 <Search className="w-4 h-4 text-muted-foreground"/>
 
 <Input
-placeholder="Search inventories..."
+placeholder={t("searchInventories")}
 className="max-w-sm"
 value={search}
 onChange={(e) => setSearch(e.target.value)}
@@ -301,12 +301,11 @@ onChange={(e) => setSearch(e.target.value)}
 <Boxes className="w-16 h-16 text-gray-300"/>
 
 <h3 className="text-xl font-semibold">
-No inventories found
+{t("NoInventory")}
 </h3>
 
 <p className="text-muted-foreground max-w-sm">
-You don't have any inventories yet or nothing matches your search.
-Create your first inventory to start managing items.
+{t("NoInventoryDesc")}
 </p>
 
 <Button
@@ -315,7 +314,7 @@ onClick={() => setOpen(true)}
 >
 
 <Plus className="w-4 h-4 mr-2"/>
-Create Inventory
+{t("createInventory")}
 
 </Button>
 
@@ -390,7 +389,7 @@ className="w-full h-40 object-cover"
 <div className="flex items-center justify-between">
 
 <h2 className="text-xl font-semibold">
-Create Inventory
+({t("createInventory")})
 </h2>
 
 <button
@@ -567,14 +566,14 @@ onChange={(e)=>updateField("customBool3Name",e.target.value)}
 className="bg-blue-600 hover:bg-blue-700"
 onClick={handleCreate}
 >
-Create
+{t("Create")}
 </Button>
 
 <Button
 variant="outline"
 onClick={() => setOpen(false)}
 >
-Cancel
+{t("cancel")}
 </Button>
 
 </div>

@@ -2,17 +2,18 @@ import { useState } from "react"
 import UsersTab from "@/components/admin/UsersTab"
 import StatsTab from "@/components/admin/StatsTab"
 import InventoriesTab from "@/components/admin/InventoriesTab"
+import { useTranslation } from "react-i18next"
 
 export default function AdminPage(){
 
  const [tab,setTab]=useState("users")
-
+ const { t } = useTranslation()
  return(
 
  <div className="p-6 flex flex-col gap-6">
 
    <h1 className="text-3xl font-semibold">
-     Admin Panel
+     {t("adminPanel")}
    </h1>
 
    <div className="flex gap-3 border-b pb-2">
@@ -23,7 +24,7 @@ export default function AdminPage(){
        tab==="users"?"bg-blue-600 text-white":"bg-muted"
       }`}
      >
-       Users
+       {t("users")}
      </button>
 
      <button
@@ -32,7 +33,7 @@ export default function AdminPage(){
        tab==="inventories"?"bg-blue-600 text-white":"bg-muted"
       }`}
      >
-       Inventories
+       {t("inventories")}
      </button>
 
      <button
@@ -41,7 +42,7 @@ export default function AdminPage(){
        tab==="stats"?"bg-blue-600 text-white":"bg-muted"
       }`}
      >
-       Statistics
+       {t("stats")}
      </button>
 
    </div>

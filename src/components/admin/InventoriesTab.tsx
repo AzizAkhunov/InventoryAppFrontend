@@ -15,9 +15,10 @@ import {
  AlertDialogCancel,
  AlertDialogAction
 } from "@/components/ui/alert-dialog"
+import { useTranslation } from "react-i18next"
 
 export default function InventoriesTab(){
-
+ const { t } = useTranslation()
  const [inventories,setInventories] = useState<any[]>([])
  const [search,setSearch] = useState("")
  const [page,setPage] = useState(1)
@@ -57,7 +58,7 @@ export default function InventoriesTab(){
   {/* SEARCH */}
 
   <Input
-   placeholder="Search inventory..."
+   placeholder={t("searchInventories")}
    value={search}
    onChange={(e)=>{
     setSearch(e.target.value)
@@ -124,7 +125,7 @@ export default function InventoriesTab(){
         variant="outline"
         onClick={()=>navigate(`/inventories/${i.id}`)}
        >
-        Open
+        {t("open")}
        </Button>
 
        <AlertDialog>
@@ -132,7 +133,7 @@ export default function InventoriesTab(){
         <AlertDialogTrigger asChild>
 
          <Button size="sm" variant="destructive">
-          Delete
+            {t("delete")}
          </Button>
 
         </AlertDialogTrigger>
@@ -142,12 +143,12 @@ export default function InventoriesTab(){
          <AlertDialogHeader>
 
           <AlertDialogTitle>
-           Delete Inventory
+           {t("deleteInventory")}
           </AlertDialogTitle>
 
           <AlertDialogDescription>
-           You are about to permanently delete <b>{i.title}</b>.
-           This action cannot be undone.
+           {t("dialogDesc")} <b>{i.title}</b>.
+           {t("dialogDesc2")}
           </AlertDialogDescription>
 
          </AlertDialogHeader>
@@ -155,14 +156,14 @@ export default function InventoriesTab(){
          <AlertDialogFooter>
 
           <AlertDialogCancel>
-           Cancel
+           {t("cancel")}
           </AlertDialogCancel>
 
           <AlertDialogAction
            className="bg-red-600 hover:bg-red-700"
            onClick={()=>handleDelete(i.id)}
           >
-           Delete
+           {t("delete")}
           </AlertDialogAction>
 
          </AlertDialogFooter>
@@ -192,11 +193,11 @@ export default function InventoriesTab(){
     disabled={page === 1}
     onClick={()=>setPage(p=>p-1)}
    >
-    Prev
+    {t("prev")}
    </Button>
 
    <span className="text-sm">
-    Page {page} / {totalPages || 1}
+     {t("page")} {page} / {totalPages || 1}
    </span>
 
    <Button
@@ -204,7 +205,7 @@ export default function InventoriesTab(){
     disabled={page === totalPages}
     onClick={()=>setPage(p=>p+1)}
    >
-    Next
+    {t("next")}
    </Button>
 
   </div>

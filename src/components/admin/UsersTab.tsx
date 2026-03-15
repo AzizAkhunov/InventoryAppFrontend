@@ -8,6 +8,7 @@ import {
   blockUser,
   unblockUser
 } from "@/api/AdminApi"
+import { useTranslation } from "react-i18next"
 
 type User = {
   id: string
@@ -55,6 +56,7 @@ export default function UsersTab() {
     u.email.toLowerCase().includes(search.toLowerCase())
   )
 
+  const { t } = useTranslation()
   const totalUsers = users.length
   const totalAdmins = users.filter(u => u.isAdmin).length
   const totalBlocked = users.filter(u => u.isBlocked).length
@@ -68,7 +70,7 @@ export default function UsersTab() {
     <div className="p-4 flex flex-col gap-4">
 
       <h1 className="text-3xl font-semibold">
-        Admin Panel
+        {t("adminPanel")}
       </h1>
 
       {/* STATS */}
@@ -76,15 +78,15 @@ export default function UsersTab() {
       <div className="flex gap-4">
 
         <div className="bg-muted px-4 py-2 rounded-lg text-sm">
-          Users: <b>{totalUsers}</b>
+          {t("users")}: <b>{totalUsers}</b>
         </div>
 
         <div className="bg-muted px-4 py-2 rounded-lg text-sm">
-          Admins: <b>{totalAdmins}</b>
+          {t("admins")}: <b>{totalAdmins}</b>
         </div>
 
         <div className="bg-muted px-4 py-2 rounded-lg text-sm">
-          Blocked: <b>{totalBlocked}</b>
+          {t("blocked")}: <b>{totalBlocked}</b>
         </div>
 
       </div>
@@ -92,7 +94,7 @@ export default function UsersTab() {
       {/* SEARCH */}
 
       <Input
-        placeholder="Search user..."
+        placeholder={t("searchUser")}
         value={search}
         onChange={(e) => {
           setSearch(e.target.value)
@@ -186,7 +188,7 @@ export default function UsersTab() {
                       size="sm"
                       onClick={() => handleMakeAdmin(user.id)}
                     >
-                      Make Admin
+                      {t("makeAdmin")}
                     </Button>
 
                   )}
@@ -198,7 +200,7 @@ export default function UsersTab() {
                       variant="outline"
                       onClick={() => handleUnblock(user.id)}
                     >
-                      Unblock
+                      {t("unblock")}
                     </Button>
 
                   ) : (
@@ -208,7 +210,7 @@ export default function UsersTab() {
                       variant="destructive"
                       onClick={() => handleBlock(user.id)}
                     >
-                      Block
+                      {t("block")}
                     </Button>
 
                   )}
@@ -234,11 +236,11 @@ export default function UsersTab() {
           disabled={page === 1}
           onClick={() => setPage(p => p - 1)}
         >
-          Prev
+          {t("prev")}
         </Button>
 
         <span className="text-sm">
-          Page {page} / {totalPages || 1}
+          {t("page")} {page} / {totalPages || 1}
         </span>
 
         <Button
@@ -246,7 +248,7 @@ export default function UsersTab() {
           disabled={page === totalPages}
           onClick={() => setPage(p => p + 1)}
         >
-          Next
+          {t("next")}
         </Button>
 
       </div>
@@ -260,7 +262,7 @@ export default function UsersTab() {
           <div className="bg-white rounded-xl p-6 w-[400px] flex flex-col gap-3">
 
             <h2 className="text-lg font-semibold">
-              User Profile
+              {t("profileUser")}
             </h2>
 
             <div className="text-sm">
@@ -283,7 +285,7 @@ export default function UsersTab() {
               variant="outline"
               onClick={() => setSelectedUser(null)}
             >
-              Close
+              {t("close")}
             </Button>
 
           </div>

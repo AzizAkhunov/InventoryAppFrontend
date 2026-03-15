@@ -4,19 +4,25 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import * as signalR from "@microsoft/signalr"
 
+import { useTranslation } from "react-i18next"
+import { useTheme } from "@/context/ThemeContext"
+
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator
+DropdownMenu,
+DropdownMenuTrigger,
+DropdownMenuContent,
+DropdownMenuItem,
+DropdownMenuLabel,
+DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu"
 
 export default function Topbar() {
 
   const { user, login, logout } = useAuth()
   const navigate = useNavigate()
+
+  const { i18n } = useTranslation()
+  const { theme, setTheme } = useTheme()
 
   const [notifications, setNotifications] = useState<any[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
@@ -66,7 +72,6 @@ export default function Topbar() {
     connection.on("NewNotification", (notification) => {
 
       setNotifications(prev => [notification, ...prev])
-
       setUnreadCount(prev => prev + 1)
 
     })
@@ -160,17 +165,18 @@ export default function Topbar() {
   }
 
 
-function handleNotificationClick(n: any) {
+  function handleNotificationClick(n: any) {
 
-  markAsRead(n.id)
+    markAsRead(n.id)
 
-  setUnreadCount(prev => Math.max(prev - 1, 0))
+    setUnreadCount(prev => Math.max(prev - 1, 0))
 
-  setNotifications(prev => prev.filter(x => x.id !== n.id))
+    setNotifications(prev => prev.filter(x => x.id !== n.id))
 
-  navigate(`/inventories/${n.inventoryId}?tab=discussion`)
+    navigate(`/inventories/${n.inventoryId}?tab=discussion`)
 
-}
+  }
+
 
   function handleLogout() {
 
@@ -188,10 +194,39 @@ function handleNotificationClick(n: any) {
     <div className="border-b bg-white px-6 h-16 flex items-center justify-between">
 
       <div className="font-bold text-xl text-blue-600 tracking-tight">
-  Inventory
-</div>
+        Inventory
+      </div>
 
       <div className="flex items-center gap-4">
+
+        {/* LANGUAGE SWITCH */}
+
+        <button
+          onClick={() => i18n.changeLanguage("en")}
+          className="text-xs border px-2 py-1 rounded"
+        >
+          EN
+        </button>
+
+        <button
+          onClick={() => i18n.changeLanguage("ru")}
+          className="text-xs border px-2 py-1 rounded"
+        >
+          RU
+        </button>
+
+
+        {/* THEME SWITCH */}
+
+        <button
+          onClick={() =>
+            setTheme(theme === "light" ? "dark" : "light")
+          }
+          className="text-xs border px-2 py-1 rounded"
+        >
+          {theme === "light" ? "🌙" : "☀️"}
+        </button>
+
 
         {/* NOTIFICATIONS */}
 

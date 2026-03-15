@@ -123,7 +123,7 @@ export default function CustomIdTab({inventoryId}:Props){
     { id:"1", type:"FixedText", value:"INV-" },
     { id:"2", type:"Sequence", value:"0001" }
   ])
-
+const [success, setSuccess] = useState(false)
 
   function addElement(type:string){
 
@@ -264,10 +264,13 @@ async function saveBuilder() {
 
   await saveCustomId(inventoryId, payload)
 
-  alert("Custom ID saved")
+  setSuccess(true)
+
+  setTimeout(() => {
+    setSuccess(false)
+  }, 2000)
 
 }
-
 
 
   return(
@@ -277,7 +280,11 @@ async function saveBuilder() {
       <h3 className="text-xl font-semibold">
         Custom ID Builder
       </h3>
-
+{success && (
+  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
+    Inventory updated
+  </div>
+)}
 
       {/* PREVIEW */}
 

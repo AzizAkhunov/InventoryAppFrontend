@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react"
 import { getTagCloud } from "@/api/TagsApi"
 import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 type Tag = {
   tag: string
@@ -12,6 +13,7 @@ export default function TagCloudPage(){
 const [tags,setTags] = useState<Tag[]>([])
 const [search,setSearch] = useState("")
 const navigate = useNavigate()
+const { t } = useTranslation()
 
 useEffect(()=>{
  loadTags()
@@ -68,7 +70,7 @@ Tag Cloud
 <input
 value={search}
 onChange={e=>setSearch(e.target.value)}
-placeholder="Search tags..."
+placeholder={t("searchTags")}
 className="border rounded-lg px-4 py-2 w-full max-w-md"
 />
 
@@ -81,11 +83,11 @@ className="border rounded-lg px-4 py-2 w-full max-w-md"
 </div>
 
 <h2 className="text-2xl font-semibold text-gray-700">
-There are no tags yet
+{t("noTags")}
 </h2>
 
 <p className="text-gray-500 max-w-md">
-Tags will appear here once users start adding items with tags in inventories.
+{t("noTagsDesc")}
 </p>
 
 </div>
@@ -99,7 +101,7 @@ Tags will appear here once users start adding items with tags in inventories.
 <div className="flex flex-col gap-3">
 
 <h2 className="text-xl font-semibold">
-Top Tags
+{t("topTags")}
 </h2>
 
 <div className="flex gap-3 flex-wrap">
@@ -131,7 +133,7 @@ className="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full cursor-pointer h
 {filteredTags.length === 0 && search !== "" && (
 
 <div className="w-full text-center text-gray-500 py-10">
-No tags found for "{search}"
+{t("noTags")} "{search}"
 </div>
 
 )}
