@@ -294,6 +294,35 @@ onChange={(e) => setSearch(e.target.value)}
 </div>
 
 
+{filteredInventories.length === 0 ? (
+
+<div className="flex flex-col items-center justify-center py-20 text-center gap-4">
+
+<Boxes className="w-16 h-16 text-gray-300"/>
+
+<h3 className="text-xl font-semibold">
+No inventories found
+</h3>
+
+<p className="text-muted-foreground max-w-sm">
+You don't have any inventories yet or nothing matches your search.
+Create your first inventory to start managing items.
+</p>
+
+<Button
+className="bg-blue-600 hover:bg-blue-700"
+onClick={() => setOpen(true)}
+>
+
+<Plus className="w-4 h-4 mr-2"/>
+Create Inventory
+
+</Button>
+
+</div>
+
+) : (
+
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
 {filteredInventories.map((inv) => (
@@ -346,6 +375,8 @@ className="w-full h-40 object-cover"
 ))}
 
 </div>
+
+)}
 
 
 
