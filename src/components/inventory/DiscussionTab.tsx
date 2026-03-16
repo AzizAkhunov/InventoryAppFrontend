@@ -110,11 +110,11 @@ setText("")
 
   return (
 
-    <div className="w-[800px] h-[500px] border rounded-xl flex flex-col bg-white">
+    <div className="w-[800px] h-[500px] border border-gray-200 dark:border-gray-700 rounded-xl flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
 
       {/* HEADER */}
 
-      <div className="border-b px-4 py-3 font-semibold">
+      <div className="border-b border-gray-200 dark:border-gray-700 px-4 py-3 font-semibold">
         Discussion
       </div>
 
@@ -139,7 +139,7 @@ setText("")
 
       {/* USERNAME */}
 
-      <span className="text-xs font-semibold text-gray-700">
+      <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
         {c.authorName}
       </span>
 
@@ -151,7 +151,7 @@ setText("")
 
         <div
           className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold
-          ${isMe ? "bg-blue-600 text-white" : "bg-gray-300 text-black"}`}
+          ${isMe ? "bg-blue-600 text-white" : "bg-gray-300 dark:bg-gray-700 text-black dark:text-white"}`}
         >
           {(c.authorName ?? "U").charAt(0).toUpperCase()}
         </div>
@@ -162,7 +162,7 @@ setText("")
           className={`px-4 py-2 rounded-2xl text-sm max-w-[400px]
           ${isMe
             ? "bg-blue-600 text-white"
-            : "bg-gray-100 text-black"
+            : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           }`}
         >
 
@@ -187,7 +187,7 @@ setText("")
 
       {/* INPUT */}
 
-      <div className="border-t p-3 flex gap-2">
+      <div className="border-t border-gray-200 dark:border-gray-700 p-3 flex gap-2">
 
         <input
           value={text}
@@ -199,7 +199,7 @@ setText("")
             }
           }}
           placeholder="Write a message..."
-          className="flex-1 border rounded-lg px-3 py-2 text-sm"
+          className="flex-1 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
         />
 
         <Button onClick={sendComment}>

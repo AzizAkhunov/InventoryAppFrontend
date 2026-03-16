@@ -78,24 +78,24 @@ export default function StatsTab({ inventoryId }: Props) {
 
       <div className="grid grid-cols-4 gap-6">
 
-        <div className="bg-white border rounded-xl p-4">
-          <div className="text-sm text-gray-500">Total Items</div>
-          <div className="text-2xl font-semibold">{totalItems}</div>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+          <div className="text-sm text-gray-500 dark:text-gray-400">Total Items</div>
+          <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{totalItems}</div>
         </div>
 
-        <div className="bg-white border rounded-xl p-4">
-          <div className="text-sm text-gray-500">Total Likes</div>
-          <div className="text-2xl font-semibold">{totalLikes}</div>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+          <div className="text-sm text-gray-500 dark:text-gray-400">Total Likes</div>
+          <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{totalLikes}</div>
         </div>
 
-        <div className="bg-white border rounded-xl p-4">
-          <div className="text-sm text-gray-500">Items With Documents</div>
-          <div className="text-2xl font-semibold">{itemsWithDocuments}</div>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+          <div className="text-sm text-gray-500 dark:text-gray-400">Items With Documents</div>
+          <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{itemsWithDocuments}</div>
         </div>
 
-        <div className="bg-white border rounded-xl p-4">
-          <div className="text-sm text-gray-500">Boolean True</div>
-          <div className="text-2xl font-semibold">{boolTrue}</div>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+          <div className="text-sm text-gray-500 dark:text-gray-400">Boolean True</div>
+          <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{boolTrue}</div>
         </div>
 
       </div>
@@ -103,9 +103,9 @@ export default function StatsTab({ inventoryId }: Props) {
 
       {/* BOOLEAN CHART */}
 
-      <div className="bg-white border rounded-xl p-6">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-6">
 
-        <div className="font-semibold mb-4">
+        <div className="font-semibold mb-4 text-gray-900 dark:text-gray-100">
           Boolean Distribution
         </div>
 
@@ -113,11 +113,11 @@ export default function StatsTab({ inventoryId }: Props) {
 
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" />
-            </BarChart>
+  <XAxis dataKey="name" stroke="#9ca3af" />
+  <YAxis stroke="#9ca3af" />
+  <Tooltip />
+  <Bar dataKey="value" fill="#3b82f6" radius={[6,6,0,0]} />
+</BarChart>
           </ResponsiveContainer>
 
         </div>

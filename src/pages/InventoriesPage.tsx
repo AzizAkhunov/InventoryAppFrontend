@@ -238,15 +238,15 @@ return (
 {t("inventories")}
 </h1>
 
+{user && (
 <Button
 className="bg-blue-600 hover:bg-blue-700"
 onClick={() => setOpen(true)}
 >
-
 <Plus className="w-4 h-4 mr-2"/>
 {t("createInventory")}
-
 </Button>
+)}
 
 </div>
 
@@ -262,6 +262,8 @@ onClick={() => setMode("all")}
 {t("all")}
 </Button>
 
+{user && (
+<>
 <Button
 variant={mode === "my" ? "default" : "outline"}
 onClick={() => setMode("my")}
@@ -275,6 +277,8 @@ onClick={() => setMode("shared")}
 >
 {t("sharedWithMe")}
 </Button>
+</>
+)}
 
 </div>
 

@@ -98,15 +98,15 @@ setUsers(prev => prev.filter(u => u.id !== id))
 
       <div className="flex gap-4">
 
-        <div className="bg-muted px-4 py-2 rounded-lg text-sm">
+        <div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-lg text-sm text-gray-900 dark:text-gray-100">
           {t("users")}: <b>{totalUsers}</b>
         </div>
 
-        <div className="bg-muted px-4 py-2 rounded-lg text-sm">
+        <div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-lg text-sm text-gray-900 dark:text-gray-100">
           {t("admins")}: <b>{totalAdmins}</b>
         </div>
 
-        <div className="bg-muted px-4 py-2 rounded-lg text-sm">
+          <div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-lg text-sm text-gray-900 dark:text-gray-100">
           {t("blocked")}: <b>{totalBlocked}</b>
         </div>
 
@@ -130,7 +130,7 @@ setUsers(prev => prev.filter(u => u.id !== id))
 
         <table className="w-full text-sm">
 
-          <thead className="bg-muted">
+          <thead className="bg-gray-100 dark:bg-gray-800">
 
             <tr className="text-left">
 
@@ -150,7 +150,7 @@ setUsers(prev => prev.filter(u => u.id !== id))
 
               <tr
                 key={user.id}
-                className="border-t cursor-pointer hover:bg-muted/40"
+                className="border-t border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
                 onClick={() => setSelectedUser(user)}
               >
 
@@ -158,7 +158,7 @@ setUsers(prev => prev.filter(u => u.id !== id))
                   {user.userName}
                 </td>
 
-                <td className="p-3 text-muted-foreground">
+                <td className="p-3 text-gray-500 dark:text-gray-400">
                   {user.email}
                 </td>
 

@@ -84,12 +84,12 @@ Share Inventory
 value={query}
 onChange={e=>handleSearch(e.target.value)}
 placeholder="Search user by email"
-className="border p-2 rounded"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
 />
 
 {suggestions.length > 0 && (
 
-<div className="border rounded bg-white">
+<div className="border border-gray-200 dark:border-gray-700 rounded bg-white dark:bg-gray-900 shadow-sm">
 
 {suggestions.map(u => (
 
@@ -100,7 +100,7 @@ onClick={()=>{
  setQuery(u.email)
  setSuggestions([])
 }}
-className="p-2 hover:bg-gray-100 cursor-pointer"
+className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer text-gray-900 dark:text-gray-100"
 >
 
 {u.email}
@@ -124,15 +124,15 @@ Add Access
 
 </button>
 
-<div className="border rounded-xl">
+<div className="border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900">
 
 <table className="w-full">
 
-<thead className="bg-gray-50">
+<thead className="bg-gray-50 dark:bg-gray-800">
 
 <tr>
 
-<th className="p-2 text-left">
+<th className="p-2 text-left text-gray-700 dark:text-gray-300">
 User
 </th>
 
@@ -146,14 +146,14 @@ User
 
 {users.map(u => (
 
-<tr key={u.id} className="border-t">
+<tr key={u.id} className="border-t border-gray-200 dark:border-gray-700">
 
 <td className="p-2">
 <div className="font-medium">
 {u.userName}
 </div>
 
-<div className="text-sm text-gray-500">
+<div className="text-sm text-gray-500 dark:text-gray-400">
 {u.email}
 </div>
 </td>

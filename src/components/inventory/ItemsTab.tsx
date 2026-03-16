@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useTranslation } from "react-i18next"
 import { Heart } from "lucide-react"
 import { toggleLike } from "@/api/ItemsApi"
+import { useAuth } from "@/context/AuthContext"
 
 import {
 Dialog,
@@ -94,10 +95,10 @@ export default function ItemsTab({ inventoryId }: Props) {
 const { t } = useTranslation()
 const [items, setItems] = useState<Item[]>([])
 const [inventory, setInventory] = useState<Inventory | null>(null)
-
+const [loginMessage, setLoginMessage] = useState(false)
 const [selected, setSelected] = useState<string[]>([])
 const [search, setSearch] = useState("")
-
+const { user } = useAuth()
 const [openAdd, setOpenAdd] = useState(false)
 
 const [text1, setText1] = useState("")
@@ -195,6 +196,8 @@ setOpenAdd(false)
 
 async function likeItem(itemId: string){
 
+try{
+
 const res = await toggleLike(itemId)
 
 const { likesCount, likedByMe } = res.data
@@ -206,6 +209,21 @@ i.id === itemId
 : i
 )
 )
+
+}catch(err:any){
+
+if(err.response?.status === 401){
+setLoginMessage(true)
+
+setTimeout(()=>{
+setLoginMessage(false)
+},2500)
+return
+}
+
+console.error(err)
+
+}
 
 }
 
@@ -256,7 +274,11 @@ loadData()
 return (
 
 <div className="flex flex-col gap-8 items-center">
-
+{loginMessage && (
+<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-white px-6 py-3 rounded-xl shadow-lg text-sm">
+🔒 Please login to like items
+</div>
+)}  
 <div className="flex justify-between w-[1200px]">
 
 <h2 className="text-3xl font-semibold">
@@ -265,6 +287,7 @@ return (
 
 <div className="flex gap-4">
 
+{user && (
 <Button
 className="bg-blue-600 hover:bg-blue-700"
 onClick={() => setOpenAdd(true)}
@@ -272,6 +295,7 @@ onClick={() => setOpenAdd(true)}
 <Plus className="w-4 h-4 mr-2"/>
 {t("addItem")}
 </Button>
+)}
 
 {selected.length > 0 && (
 
@@ -296,20 +320,20 @@ type="text"
 placeholder={t("searchItems")}
 value={search}
 onChange={(e) => setSearch(e.target.value)}
-className="w-full border rounded-lg px-4 py-3"
+className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-3 placeholder-gray-400 dark:placeholder-gray-500"
 />
 
 </div>
 
-<div className="w-[1200px] h-[400px] border rounded-xl overflow-y-auto">
+<div className="w-[1200px] h-[400px] border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-xl overflow-y-auto">
 
-<Table>
+<Table className="text-gray-900 dark:text-gray-100">
 
-<TableHeader>
+<TableHeader className="bg-gray-100 dark:bg-gray-800">
 
-<TableRow>
+<TableRow className="border-b border-gray-300 dark:border-gray-700">
 
-<TableHead>
+<TableHead className="text-gray-800 dark:text-gray-100 font-semibold">
 
 <input
 type="checkbox"
@@ -345,7 +369,7 @@ onChange={toggleSelectAll}
 
 {filteredItems.map(item => (
 
-<TableRow key={item.id}>
+<TableRow key={item.id} className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
 
 <TableCell>
 <input
@@ -407,7 +431,7 @@ item.likedByMe
 
 <Dialog open={openAdd} onOpenChange={setOpenAdd}>
 
-<DialogContent>
+<DialogContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700">
 
 <DialogHeader>
 <DialogTitle>{t("addItem")}</DialogTitle>
@@ -420,7 +444,7 @@ item.likedByMe
 placeholder={inventory.customString1Name}
 value={text1}
 onChange={(e)=>setText1(e.target.value)}
-className="border p-2 rounded"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
 />
 )}
 
@@ -429,7 +453,7 @@ className="border p-2 rounded"
 placeholder={inventory.customString2Name}
 value={text2}
 onChange={(e)=>setText2(e.target.value)}
-className="border p-2 rounded"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
 />
 )}
 
@@ -438,7 +462,7 @@ className="border p-2 rounded"
 placeholder={inventory.customString3Name}
 value={text3}
 onChange={(e)=>setText3(e.target.value)}
-className="border p-2 rounded"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
 />
 )}
 
@@ -448,7 +472,7 @@ type="number"
 placeholder={inventory.customNumber1Name}
 value={number1}
 onChange={(e)=>setNumber1(e.target.value)}
-className="border p-2 rounded"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
 />
 )}
 
@@ -458,7 +482,7 @@ type="number"
 placeholder={inventory.customNumber2Name}
 value={number2}
 onChange={(e)=>setNumber2(e.target.value)}
-className="border p-2 rounded"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
 />
 )}
 
@@ -468,7 +492,7 @@ type="number"
 placeholder={inventory.customNumber3Name}
 value={number3}
 onChange={(e)=>setNumber3(e.target.value)}
-className="border p-2 rounded"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
 />
 )}
 
@@ -509,11 +533,11 @@ onChange={(e)=>setBool3(e.target.checked)}
 placeholder={t("documentUrl")}
 value={doc1}
 onChange={(e)=>setDoc1(e.target.value)}
-className="border p-2 rounded"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
 />
 
 {doc1 && (
-<div className="border p-2 rounded">
+<div className="border border-gray-300 dark:border-gray-700 p-2 rounded bg-white dark:bg-gray-800">
 
 {doc1.toLowerCase().endsWith(".pdf") ? (
 

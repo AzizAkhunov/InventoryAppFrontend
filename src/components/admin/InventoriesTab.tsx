@@ -71,9 +71,9 @@ export default function InventoriesTab(){
 
   <div className="border rounded-xl overflow-hidden">
 
-  <table className="w-full text-sm">
+  <table className="w-full text-sm text-gray-900 dark:text-gray-100">
 
-   <thead className="bg-muted">
+   <thead className="bg-gray-100 dark:bg-gray-800">
 
     <tr className="text-left">
 
@@ -90,13 +90,16 @@ export default function InventoriesTab(){
 
     {paginatedInventories.map(i => (
 
-     <tr key={i.id} className="border-t">
+    <tr
+ key={i.id}
+ className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+>
 
       <td className="p-3 font-medium">
        {i.title}
       </td>
 
-      <td className="p-3 text-muted-foreground">
+      <td className="p-3 text-gray-500 dark:text-gray-400">
        {i.owner}
       </td>
 
@@ -104,13 +107,13 @@ export default function InventoriesTab(){
 
        {i.isPublic ? (
 
-        <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+        <span className="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 px-2 py-1 rounded text-xs">
          Public
         </span>
 
        ) : (
 
-        <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
+        <span className="bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 px-2 py-1 rounded text-xs">
          Private
         </span>
 

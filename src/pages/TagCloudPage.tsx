@@ -47,11 +47,13 @@ function getSize(count:number){
 
 function getColor(count:number){
 
- if(count > 20) return "bg-purple-100 text-purple-700 hover:bg-purple-200"
- if(count > 10) return "bg-blue-100 text-blue-700 hover:bg-blue-200"
- if(count > 5) return "bg-green-100 text-green-700 hover:bg-green-200"
+ if(count > 20) return "bg-purple-100 text-purple-700 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800"
 
- return "bg-gray-100 text-gray-700 hover:bg-gray-200"
+ if(count > 10) return "bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800"
+
+ if(count > 5) return "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800"
+
+ return "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
 }
 
 function randomRotate(){
@@ -63,7 +65,7 @@ return(
 
 <div className="flex flex-col gap-10">
 
-<h1 className="text-3xl font-semibold">
+<h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
 Tag Cloud
 </h1>
 
@@ -71,7 +73,7 @@ Tag Cloud
 value={search}
 onChange={e=>setSearch(e.target.value)}
 placeholder={t("searchTags")}
-className="border rounded-lg px-4 py-2 w-full max-w-md"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2 w-full max-w-md"
 />
 
 {tags.length === 0 && (
@@ -111,7 +113,7 @@ className="border rounded-lg px-4 py-2 w-full max-w-md"
 <span
 key={tag.tag}
 onClick={()=>navigate(`/search?tag=${tag.tag}`)}
-className="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full cursor-pointer hover:bg-yellow-200 transition flex items-center gap-2"
+className="px-4 py-2 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300 rounded-full cursor-pointer hover:bg-yellow-200 dark:hover:bg-yellow-800 transition flex items-center gap-2"
 >
 
 #{tag.tag}

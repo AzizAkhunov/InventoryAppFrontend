@@ -23,7 +23,7 @@ export default function Topbar() {
 
   const { i18n } = useTranslation()
   const { theme, setTheme } = useTheme()
-
+const isDark = document.documentElement.classList.contains("dark")
   const [notifications, setNotifications] = useState<any[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
 
@@ -110,7 +110,8 @@ export default function Topbar() {
       {
         theme: "outline",
         size: "medium",
-        width: 220
+        width: 220,
+        locale: "en"
       }
     )
 

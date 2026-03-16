@@ -53,11 +53,11 @@ loadInventory()
 
   return (
 
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 text-gray-900 dark:text-gray-100">
 
-      <h1 className="text-3xl font-semibold">
+      <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
   {t("inventory")}: 
-  <span className="text-blue-600 ml-2">
+  <span className="text-blue-600 dark:text-blue-400 ml-2">
     {title}
   </span>
 </h1>
@@ -68,47 +68,47 @@ loadInventory()
         className="flex flex-col gap-6"
       >
 
-        <TabsList className="bg-gray-100 p-1 rounded-xl flex gap-2">
+        <TabsList className="bg-gray-100 dark:bg-gray-800 p-1 rounded-xl flex gap-2 border border-gray-200 dark:border-gray-700">
 
           <TabsTrigger
             value="items"
-            className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+            className="px-6 py-2 rounded-lg text-sm font-medium transition text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
             {t("items")}
           </TabsTrigger>
 
           <TabsTrigger
             value="discussion"
-            className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+            className="px-6 py-2 rounded-lg text-sm font-medium transition text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
             {t("discussion")}
           </TabsTrigger>
 
           <TabsTrigger
             value="settings"
-            className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+            className="px-6 py-2 rounded-lg text-sm font-medium transition text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
             {t("settings")}
           </TabsTrigger>
 
           <TabsTrigger
             value="customId"
-            className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+            className="px-6 py-2 rounded-lg text-sm font-medium transition text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
             {t("customId")}
           </TabsTrigger>
 
           <TabsTrigger
             value="stats"
-            className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+            className="px-6 py-2 rounded-lg text-sm font-medium transition text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
           >
             {t("stats")}
           </TabsTrigger>
 
           <TabsTrigger
  value="access"
- className="px-6 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
->
+  className="px-6 py-2 rounded-lg text-sm font-medium transition text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+  >
 Access
 </TabsTrigger>
 

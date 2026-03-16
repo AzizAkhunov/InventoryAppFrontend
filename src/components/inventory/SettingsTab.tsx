@@ -130,7 +130,7 @@ return (
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm"
+        className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
       />
     </div>
 
@@ -143,7 +143,7 @@ return (
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm"
+        className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
         rows={2}
       />
     </div>
@@ -157,7 +157,7 @@ return (
       <input
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm"
+        className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
       />
     </div>
 
@@ -170,7 +170,7 @@ return (
       <input
         value={imageUrl}
         onChange={(e) => setImageUrl(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm"
+        className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
       />
     </div>
 
@@ -211,7 +211,7 @@ return (
 
   </AlertDialogTrigger>
 
-  <AlertDialogContent>
+<AlertDialogContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700">
 
     <AlertDialogHeader>
 

@@ -62,13 +62,13 @@ function SortableItem({
       style={style}
       {...attributes}
       {...listeners}
-      className="flex items-center gap-3 border p-3 rounded-lg bg-white"
+      className="flex items-center gap-3 border border-gray-200 dark:border-gray-700 p-3 rounded-lg bg-white dark:bg-gray-900"
     >
 
       <select
         value={element.type}
         onChange={e=>updateType(index,e.target.value)}
-        className="border p-2 rounded"
+        className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
       >
 
         <option value="FixedText">Fixed</option>
@@ -83,7 +83,7 @@ function SortableItem({
         <input
           value={element.value ?? ""}
           onChange={e=>updateValue(index,e.target.value)}
-          className="border p-2 rounded"
+          className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded"
           placeholder="Text"
         />
 
@@ -288,9 +288,9 @@ async function saveBuilder() {
 
       {/* PREVIEW */}
 
-      <div className="bg-gray-100 p-4 rounded-lg">
+      <div className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 rounded-lg">
 
-        <div className="text-sm text-gray-500 mb-1">
+        <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
           Example
         </div>
 
@@ -341,28 +341,28 @@ async function saveBuilder() {
 
         <button
           onClick={()=>addElement("FixedText")}
-          className="border px-4 py-2 rounded hover:bg-gray-100"
+          className="border border-gray-300 dark:border-gray-700 px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
         >
           Add Fixed
         </button>
 
         <button
           onClick={()=>addElement("Sequence")}
-          className="border px-4 py-2 rounded hover:bg-gray-100"
+          className="border border-gray-300 dark:border-gray-700 px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
         >
           Add Sequence
         </button>
 
         <button
           onClick={()=>addElement("Random20Bit")}
-          className="border px-4 py-2 rounded hover:bg-gray-100"
+          className="border border-gray-300 dark:border-gray-700 px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
         >
           Add Random
         </button>
 
         <button
           onClick={()=>addElement("DateTime")}
-          className="border px-4 py-2 rounded hover:bg-gray-100"
+          className="border border-gray-300 dark:border-gray-700 px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
         >
           Add Date
         </button>
@@ -372,7 +372,7 @@ async function saveBuilder() {
 
       <button
         onClick={saveBuilder}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 shadow-sm"
       >
         Save Custom ID
       </button>

@@ -24,19 +24,8 @@ function App() {
 
         <Routes>
 
-          <Route path="/" element={<DashboardPage />} />
-          
-          
-          <Route
-  path="/inventories"
-  element={
-    <ProtectedRoute>
-      <InventoriesPage />
-    </ProtectedRoute>
-  }
-/>
-
-
+          <Route path="/" element={<DashboardPage />} /> 
+          <Route path="/inventories" element={<InventoriesPage />} />
           <Route path="/inventories/:id" element={<InventoryPage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
           <Route path="/profile" element={<ProfilePage />} />

@@ -81,23 +81,23 @@ export default function DashboardPage() {
           return (
 
             <Card
-              key={i}
-              className="shadow-sm hover:shadow-lg transition"
-            >
+  key={i}
+  className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-lg transition"
+> 
 
               <CardHeader className="flex flex-row items-center justify-between pb-2">
 
-                <CardTitle className="text-sm text-muted-foreground">
+                <CardTitle className="text-sm text-gray-600 dark:text-gray-400">
                   {s.title}
                 </CardTitle>
 
-                <Icon className="h-4 w-4 text-muted-foreground"/>
+                <Icon className="h-4 w-4 text-gray-500 dark:text-gray-400"/>
 
               </CardHeader>
 
               <CardContent>
 
-                <p className="text-3xl font-bold">
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {s.value}
                 </p>
 
@@ -111,7 +111,7 @@ export default function DashboardPage() {
 
       </div>
 
-      <Card className="shadow-sm">
+      <Card className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
 
         <CardHeader>
 
