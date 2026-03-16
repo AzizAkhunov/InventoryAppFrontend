@@ -39,7 +39,6 @@ export default function AdminPage(){
 
    {tab==="users" && <UsersTab/>}
    {tab==="inventories" && <InventoriesTab/>}
-   {tab==="stats" && <StatsTab/>}
 
  </div>
 
