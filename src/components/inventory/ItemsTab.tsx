@@ -125,6 +125,15 @@ const filteredItems = items.filter(item =>
 (item.text1 ?? "").toLowerCase().includes(search.toLowerCase())
 )
 
+function toggleSelectAll() {
+
+if (selected.length === filteredItems.length) {
+setSelected([])
+} else {
+setSelected(filteredItems.map(i => i.id))
+}
+}
+
 function toggleSelect(id: string) {
 
 if (selected.includes(id)) {
@@ -300,7 +309,18 @@ className="w-full border rounded-lg px-4 py-3"
 
 <TableRow>
 
-<TableHead></TableHead>
+<TableHead>
+
+<input
+type="checkbox"
+checked={
+filteredItems.length > 0 &&
+selected.length === filteredItems.length
+}
+onChange={toggleSelectAll}
+/>
+
+</TableHead>
 <TableHead>Custom ID</TableHead>
 
 {inventory?.customString1Enabled && <TableHead>{inventory.customString1Name}</TableHead>}

@@ -1,6 +1,5 @@
 import { useState } from "react"
 import UsersTab from "@/components/admin/UsersTab"
-import StatsTab from "@/components/admin/StatsTab"
 import InventoriesTab from "@/components/admin/InventoriesTab"
 import { useTranslation } from "react-i18next"
 
@@ -34,15 +33,6 @@ export default function AdminPage(){
       }`}
      >
        {t("inventories")}
-     </button>
-
-     <button
-      onClick={()=>setTab("stats")}
-      className={`px-3 py-1 text-sm rounded ${
-       tab==="stats"?"bg-blue-600 text-white":"bg-muted"
-      }`}
-     >
-       {t("stats")}
      </button>
 
    </div>
