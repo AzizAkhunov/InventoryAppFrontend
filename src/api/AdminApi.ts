@@ -27,3 +27,7 @@ export function getInventories(){
 export function deleteInventory(id:string){
  return api.delete(`/admin/inventories/${id}`)
 }
+
+export function deleteUser(id:string){
+ return api.delete(`/admin/users/${id}`)
+}

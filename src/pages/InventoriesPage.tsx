@@ -328,7 +328,7 @@ onClick={() => setOpen(true)}
 
 <Card
 key={inv.id}
-className="hover:shadow-xl transition cursor-pointer overflow-hidden"
+className="hover:shadow-xl transition cursor-pointer overflow-hidden bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800"
 onClick={() => navigate(`/inventories/${inv.id}`)}
 >
 
@@ -341,13 +341,13 @@ className="w-full h-40 object-cover"
 
 ) : (
 
-<div className="w-full h-40 bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-bold">
+<div className="w-full h-40 bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-blue-600 dark:to-purple-700 flex items-center justify-center text-white text-3xl font-bold">
 {inv.title?.charAt(0)}
 </div>
 
 )}
 
-<CardHeader className="flex flex-row items-center gap-3">
+<CardHeader className="flex flex-row items-center gap-3 text-gray-900 dark:text-gray-100">
 
 <Boxes className="text-blue-600"/>
 
@@ -357,7 +357,7 @@ className="w-full h-40 object-cover"
 
 </CardHeader>
 
-<CardContent className="flex justify-between text-sm text-muted-foreground">
+<CardContent className="flex justify-between text-sm text-muted-foreground dark:text-gray-400">
 
 <span>
 {inv.itemsCount ?? 0} items

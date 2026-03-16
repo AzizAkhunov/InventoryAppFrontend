@@ -22,6 +22,7 @@ type Inventory = {
   imageUrl?: string
   isPublic: boolean
   categoryName: string
+  version: number
 }
 
 type Props = {
@@ -31,6 +32,7 @@ type Props = {
 export default function SettingsTab({ inventoryId }: Props) {
   const { t } = useTranslation()
   const [inventory, setInventory] = useState<Inventory | null>(null)
+  const [version, setVersion] = useState(0)
 const [success, setSuccess] = useState(false)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -59,25 +61,40 @@ const [success, setSuccess] = useState(false)
     setIsPublic(data.isPublic)
     setCategory(data.categoryName)
 
+    setVersion(data.version)
   }
 
 
-  async function saveChanges() {
+async function saveChanges() {
 
-    await api.put(`/inventories/${inventoryId}`, {
+  try {
+
+    const res = await api.put(`/inventories/${inventoryId}`, {
       title,
       description,
       imageUrl,
       isPublic,
-      categoryName: category
+      categoryName: category,
+      version
     })
 
-setSuccess(true)
+    setVersion(res.data.version)
 
-setTimeout(() => {
-  setSuccess(false)
-}, 2000)
+    setSuccess(true)
+
+    setTimeout(() => {
+      setSuccess(false)
+    }, 2000)
+
+  } catch (err:any) {
+
+    if (err.response?.status === 409) {
+      alert("Inventory was modified by another user. Please refresh.")
+    }
+
   }
+
+}
 
 
   async function deleteInventory() {

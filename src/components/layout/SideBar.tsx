@@ -25,7 +25,7 @@ export default function Sidebar() {
 
   return (
 
-    <aside className="w-64 border-r bg-white flex flex-col">
+    <aside className="w-64 border-r bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col">
 
       <nav className="flex flex-col gap-1 p-3">
 
@@ -42,8 +42,8 @@ export default function Sidebar() {
                 `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition
                 ${
                   isActive
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-muted-foreground hover:bg-muted"
+  ? "bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-400"
+  : "text-muted-foreground hover:bg-muted dark:hover:bg-gray-800"
                 }`
               }
             >

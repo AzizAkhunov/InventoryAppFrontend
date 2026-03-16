@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+AlertDialog,
+AlertDialogAction,
+AlertDialogCancel,
+AlertDialogContent,
+AlertDialogDescription,
+AlertDialogFooter,
+AlertDialogHeader,
+AlertDialogTitle,
+AlertDialogTrigger
+} from "@/components/ui/alert-dialog"
 
 import {
   getUsers,
   makeAdmin,
   blockUser,
-  unblockUser
+  unblockUser,
+  deleteUser
 } from "@/api/AdminApi"
 import { useTranslation } from "react-i18next"
 
@@ -40,6 +52,15 @@ export default function UsersTab() {
     await makeAdmin(id)
     loadUsers()
   }
+
+async function handleDeleteUser(id: string){
+
+await deleteUser(id)
+
+setUsers(prev => prev.filter(u => u.id !== id))
+
+}
+
 
   async function handleBlock(id: string) {
     await blockUser(id)
@@ -206,14 +227,59 @@ export default function UsersTab() {
                   ) : (
 
                     <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleBlock(user.id)}
-                    >
-                      {t("block")}
-                    </Button>
+size="sm"
+variant="outline"
+className="text-orange-600 border-orange-300 hover:bg-orange-50"
+onClick={() => handleBlock(user.id)}
+>
+{t("block")}
+</Button>
 
                   )}
+
+<AlertDialog>
+
+<AlertDialogTrigger asChild>
+
+<Button
+size="sm"
+variant="destructive"
+>
+{t("delete")}
+</Button>
+
+</AlertDialogTrigger>
+
+<AlertDialogContent>
+
+<AlertDialogHeader>
+
+<AlertDialogDescription>
+{t("deleteUser")}
+</AlertDialogDescription>
+
+</AlertDialogHeader>
+
+<AlertDialogFooter>
+
+<AlertDialogCancel>
+{t("cancel")}
+</AlertDialogCancel>
+
+<AlertDialogAction
+onClick={() => handleDeleteUser(user.id)}
+className="bg-red-600 hover:bg-red-700"
+>
+
+{t("delete")}
+
+</AlertDialogAction>
+
+</AlertDialogFooter>
+
+</AlertDialogContent>
+
+</AlertDialog>
 
                 </td>
 

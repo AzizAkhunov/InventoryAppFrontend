@@ -117,6 +117,16 @@ export default function Topbar() {
   }, [user])
 
 
+  useEffect(() => {
+
+if(theme === "dark"){
+document.documentElement.classList.add("dark")
+}else{
+document.documentElement.classList.remove("dark")
+}
+
+},[theme])
+
   async function handleCredentialResponse(response: any) {
 
     try {
@@ -191,7 +201,7 @@ export default function Topbar() {
 
   return (
 
-    <div className="border-b bg-white px-6 h-16 flex items-center justify-between">
+    <div className="border-b bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 px-6 h-16 flex items-center justify-between">
 
       <div className="font-bold text-xl text-blue-600 tracking-tight">
         Inventory
@@ -257,7 +267,7 @@ export default function Topbar() {
             <DropdownMenuSeparator/>
 
             {notifications.length === 0 && (
-              <div className="p-3 text-sm text-gray-500">
+              <div className="p-3 text-sm text-gray-500 dark:text-gray-400">
                 No notifications
               </div>
             )}
@@ -302,7 +312,7 @@ export default function Topbar() {
 
             <DropdownMenuTrigger asChild>
 
-              <button className="flex items-center gap-3 hover:bg-gray-100 px-3 py-2 rounded-lg transition">
+              <button className="flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-lg transition">
 
                 {user.picture ? (
 

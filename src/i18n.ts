@@ -68,6 +68,7 @@ i18n
           dialogDesc: "You are about to permanently delete this inventory.",
           dialogDesc2: "This action cannot be undone. Please type DELETE to confirm.",
           open: "Open",
+          deleteUser: "Are you sure you want to delete this user? This action cannot be undone.",
         }
       },
 
@@ -126,7 +127,8 @@ i18n
             page: "Страница",
             dialogDesc: "Вы собираетесь навсегда удалить этот инвентарь.",
             dialogDesc2: "Это действие нельзя отменить. Пожалуйста, введите DELETE для подтверждения.",
-            open: "Открыть"
+            open: "Открыть",
+            deleteUser: "Вы уверены, что хотите удалить этого пользователя? Это действие нельзя отменить."
         }
       }
     }
