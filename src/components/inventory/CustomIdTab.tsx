@@ -60,11 +60,13 @@ function SortableItem({
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
       className="flex items-center gap-3 border border-gray-200 dark:border-gray-700 p-3 rounded-lg bg-white dark:bg-gray-900"
     >
-
+<div
+    {...attributes}
+    {...listeners}
+    className="cursor-grab text-gray-400 select-none"
+  >⠿</div>
       <select
         value={element.type}
         onChange={e=>updateType(index,e.target.value)}
@@ -92,7 +94,7 @@ function SortableItem({
       {element.type==="Sequence" && (
 
 <input
-type="number"
+type="text"
 value={element.value ?? ""}
 onChange={e=>updateValue(index,e.target.value)}
 className="border p-2 rounded"
@@ -125,17 +127,24 @@ export default function CustomIdTab({inventoryId}:Props){
   ])
 const [success, setSuccess] = useState(false)
 
-  function addElement(type:string){
+function addElement(type:string){
 
-    setElements([
-      ...elements,
-      {
-        id: crypto.randomUUID(),
-        type
-      }
-    ])
+  let value: string | undefined
 
-  }
+  if(type==="FixedText") value="INV-"
+  if(type==="Sequence") value="0001"
+  if(type==="DateTime") value="yyyy"
+
+  setElements(prev => [
+    ...prev,
+    {
+      id: crypto.randomUUID(),
+      type,
+      value
+    }
+  ])
+
+}
 
 
   function updateValue(index:number,value:string){
@@ -211,15 +220,19 @@ function updateType(index:number,type:string){
       }
 
       if(el.type==="Sequence"){
-        result+=el.value ?? "0001"
+        const padding = (el.value ?? "0001").length
+
+        result += "1".padStart(padding,"0")
       }
 
       if(el.type==="Random20Bit"){
-        result+=Math.random().toString(16).slice(2,7).toUpperCase()
+        const value = Math.floor(Math.random() * (1 << 20))
+
+        result += value.toString(16).toUpperCase().padStart(5,"0")
       }
 
       if(el.type==="DateTime"){
-        result+=new Date().getFullYear()
+        result+=new Date().toISOString().slice(0,4)
       }
 
     })
@@ -229,12 +242,13 @@ function updateType(index:number,type:string){
   }
 
 
-async function saveBuilder() {
+async function saveBuilder(){
 
-  const payload = elements.map(el => {
+  const payload = elements.map((el, index) => {
 
     if (el.type === "FixedText") {
       return {
+        order: index,
         type: 0,
         fixedText: el.value,
         padding: null
@@ -243,20 +257,23 @@ async function saveBuilder() {
 
     if (el.type === "Sequence") {
       return {
-        type: 1,
-        padding: Number(el.value ?? 3)
+        order: index,
+        type: 7,
+        padding: (el.value ?? "0001").length
       }
     }
 
     if (el.type === "Random20Bit") {
       return {
-        type: 2
+        order: index,
+        type: 1
       }
     }
 
     if (el.type === "DateTime") {
       return {
-        type: 3
+        order: index,
+        type: 6
       }
     }
 
@@ -266,12 +283,11 @@ async function saveBuilder() {
 
   setSuccess(true)
 
-  setTimeout(() => {
+  setTimeout(()=>{
     setSuccess(false)
-  }, 2000)
+  },2000)
 
 }
-
 
   return(
 
