@@ -387,7 +387,7 @@ className="w-full h-40 object-cover"
 
 <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-<div className="bg-white p-6 rounded-xl w-[700px] max-h-[90vh] overflow-y-auto flex flex-col gap-6">
+<div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6 rounded-xl w-[700px] max-h-[90vh] overflow-y-auto flex flex-col gap-6 border border-gray-200 dark:border-gray-800">
 
 
 <div className="flex items-center justify-between">
@@ -398,7 +398,7 @@ className="w-full h-40 object-cover"
 
 <button
 onClick={() => setOpen(false)}
-className="p-1 hover:bg-gray-100 rounded"
+className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
 >
 <X className="w-5 h-5"/>
 </button>
@@ -413,7 +413,7 @@ onClick={() => setActiveTab("general")}
 className={`px-4 py-2 rounded-md text-sm ${
 activeTab === "general"
 ? "bg-blue-600 text-white"
-: "hover:bg-gray-100"
+: "hover:bg-gray-100 dark:hover:bg-gray-800"
 }`}
 >
 General
@@ -456,7 +456,7 @@ onChange={(e) => setImageUrl(e.target.value)}
 />
 
 <select
-className="border rounded-md p-2"
+className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md p-2"
 value={category}
 onChange={(e) => setCategory(e.target.value)}
 >
