@@ -18,6 +18,7 @@ const [users,setUsers] = useState<User[]>([])
 const [query,setQuery] = useState("")
 const [suggestions,setSuggestions] = useState<User[]>([])
 const [selected,setSelected] = useState<User | null>(null)
+const [ownerId,setOwnerId] = useState<string>("")
 
 useEffect(()=>{
  if(inventoryId){
@@ -30,6 +31,7 @@ async function loadAccess(){
  const res = await getAccessList(inventoryId)
 
  setUsers(res.data)
+ setOwnerId(res.data[0]?.id)
 
 }
 
@@ -160,14 +162,20 @@ User
 
 <td>
 
+{u.id === ownerId ? (
+<span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+Owner
+</span>
+) : (
+
 <button
 onClick={()=>handleRemove(u.id)}
 className="text-red-500 hover:text-red-700"
 >
-
 Remove
-
 </button>
+
+)}
 
 </td>
 
