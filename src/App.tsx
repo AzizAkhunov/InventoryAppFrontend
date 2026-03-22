@@ -11,7 +11,8 @@ import SearchPage from "./pages/SearchPage"
 import AdminPage from "./pages/AdminPage"
 import ProtectedRoute from "@/components/auth/ProtectedRoute"
 import AdminRoute from "@/components/auth/AdminRoute"
-
+import LoginPage from "./pages/LoginPage"
+import { Toaster } from "sonner"
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/tags" element={<TagCloudPage/>} />
           <Route path="/search" element={<SearchPage />} />
-
+          <Route path="/login" element={<LoginPage />} />
 
 
 
@@ -49,6 +50,8 @@ function App() {
         </Routes>
 
       </AppLayout>
+
+      <Toaster position="top-right" />
 
     </BrowserRouter>
 

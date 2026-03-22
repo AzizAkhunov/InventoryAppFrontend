@@ -298,11 +298,16 @@ document.documentElement.classList.remove("dark")
         </DropdownMenu>
 
 
-        {/* GOOGLE LOGIN */}
+        {/*LOGIN */}
 
         {!user && (
-          <div className="flex items-center h-10" id="google-login-button"></div>
-        )}
+  <button
+    onClick={() => navigate("/login")}
+    className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg"
+  >
+    Login
+  </button>
+)}
 
 
         {/* USER MENU */}
